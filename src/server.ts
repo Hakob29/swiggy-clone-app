@@ -10,6 +10,7 @@ class Server {
     constructor() {
         this.setConfigs();
         this.setRouters();
+        this.errorHandling();
     }
 
     setConfigs() {
@@ -24,6 +25,17 @@ class Server {
 
     setRouters() {
         this.app.use("/api/user", UserRouter);
+    }
+
+
+    errorHandling() {
+        this.app.use((err, req, res, next) => {
+            const errorStatus = req.errorStatus || 500;
+            res.status(errorStatus).json({
+                message: err.message || "Something went wrong. Please try again!",
+                status_code: errorStatus,
+            })
+        })
     }
 }
 
