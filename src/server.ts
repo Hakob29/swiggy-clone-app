@@ -1,7 +1,7 @@
 import * as express from "express"
-import mongoose from "mongoose";
+import * as mongoose from "mongoose";
 import { DB_URL } from "./configs/mongoDB-connection";
-import UserRouter from "./routers/UserRouter";
+import UserRouter from "./routers/user.routers";
 
 
 class Server {
@@ -15,6 +15,8 @@ class Server {
 
     setConfigs() {
         this.connectToMongoDB();
+        this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(express.json());
     }
 
     connectToMongoDB() {
