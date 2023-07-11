@@ -29,14 +29,13 @@ class Server {
         this.app.use("/api/user", UserRouter);
     }
 
-
     errorHandling() {
-        this.app.use((err, req, res, next) => {
-            const errorStatus = req.errorStatus || 500;
-            res.status(errorStatus).json({
-                message: err.message || "Something went wrong. Please try again!",
-                status_code: errorStatus,
-            })
+        this.app.use((err: any, req: express.Request, res: express.Response, next: any) => {
+            res.status(500)
+                .json({
+                    message: err.message || "Something went wrong!",
+                    statusCode: 500
+                })
         })
     }
 }

@@ -15,19 +15,29 @@ class UserRouter {
     }
 
     getRouter() {
-        this.router.get("/login", UserController.login)
+        //Get All Users
+        this.router.get("/getall", UserController.getUser)
+        //Get User By Id
+        this.router.get("/getone/:email", UserController.getone)
     }
 
     postRouter() {
-        this.router.post("/register", UserController.register)
+        //SignIn User
+        this.router.post("/signIn", UserController.signIn)
+
+        //SignUp new User
+        this.router.post("/signUp", UserController.signUp)
     }
 
     putRouter() {
+        //Update User By Id 
+        this.router.put("/update/:id", UserController.update)
 
     }
 
     deleteRouter() {
-
+        //Delete User By Id
+        this.router.delete("/delete/:id", UserController.delete)
     }
 }
 
