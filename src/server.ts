@@ -33,7 +33,7 @@ class Server {
         this.app.use((err: any, req: express.Request, res: express.Response, next: any) => {
             res.status(500)
                 .json({
-                    message: err.message || "Something went wrong!",
+                    message: err.message || err || "Something went wrong!",
                     statusCode: 500
                 })
         })
