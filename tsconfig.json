@@ -17,7 +17,11 @@
     ],
     "include": [
         "src/**/*.ts",
-        "package.json"
+        "package.json",
+        "src/user/user.controller.ts",
+        "src/user/user.routers.ts",
+        "src/user/user.model.ts",
+        "src/user/user-validators.ts"
     ],
     "exclude": [
         "node_modules"

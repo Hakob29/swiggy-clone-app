@@ -1,6 +1,6 @@
 import { Router } from "express"
-import UserController from "../controllers/user.controller";
-import { UserValidators } from "../validators/user-validators";
+import UserController from "./user.controller";
+import { UserValidators } from "./user-validators";
 
 class UserRouter {
 
@@ -15,31 +15,30 @@ class UserRouter {
 
     }
 
+
+    postRouter() {
+
+    }
+
+    //Get All Users
+    //Get User By Id
     getRouter() {
-        //Get All Users
         this.router.get("/getall", UserController.getUser)
-        //Get User By Id
         this.router.get("/getone/:email", UserController.getone)
     }
 
-    postRouter() {
-        //SignIn User
-        this.router.post("/signIn", UserValidators.signIn(), UserController.signIn)
 
-        //SignUp new User
-        this.router.post("/signUp", UserValidators.signUp(), UserController.signUp)
-    }
-
+    //Update User By Id 
     putRouter() {
-        //Update User By Id 
         this.router.put("/update/:id", UserValidators.update(), UserController.update)
 
     }
 
+    //Delete User By Id
     deleteRouter() {
-        //Delete User By Id
         this.router.delete("/delete/:id", UserController.delete)
     }
 }
+
 
 export default new UserRouter().router;

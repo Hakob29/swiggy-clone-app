@@ -1,7 +1,8 @@
 import * as express from "express"
 import * as mongoose from "mongoose";
 import { DB_URL } from "./configs/mongoDB-connection";
-import UserRouter from "./routers/user.routers";
+import UserRouter from "./user/user.routers";
+import AuthRouter from "./auth/auth-router";
 
 
 class Server {
@@ -26,7 +27,9 @@ class Server {
     }
 
     setRouters() {
+        this.app.use("/api/auth", AuthRouter);
         this.app.use("/api/user", UserRouter);
+
     }
 
     errorHandling() {

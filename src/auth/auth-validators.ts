@@ -1,6 +1,8 @@
-import { body } from "express-validator";
+import { body } from "express-validator"
 
-export class UserValidators {
+
+class AuthValidators {
+
     static signUp() {
         return [
             body("name", "Please insert only string!").isString(),
@@ -16,12 +18,7 @@ export class UserValidators {
         ]
     }
 
-    static update() {
-        return [
-            body("name", "Please insert only string!").isString(),
-            body("email", "Please insert a valid email address!").isEmail(),
-            body("password", "Password length min 5 character!").isLength({ min: 5 })
-        ]
-    }
-
 }
+
+
+export default AuthValidators

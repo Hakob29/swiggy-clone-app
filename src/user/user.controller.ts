@@ -1,4 +1,4 @@
-import User from '../models/user.model';
+import User from './user.model';
 import * as bcrypt from "bcrypt";
 import * as express from "express";
 import { validationResult } from 'express-validator';
@@ -6,55 +6,6 @@ import { validationResult } from 'express-validator';
 class UserController {
     constructor() {
 
-    }
-
-    //Login User
-    async signIn(req: express.Request, res: express.Response, next: any) {
-        try {
-            var err = validationResult(req);
-            if (!err.isEmpty()) {
-                next(err.mapped())
-            } else {
-                const signInData = req.body;
-                const expectedUser = await User.findOne({ email: signInData.email });
-                if (!expectedUser) {
-                    next(new Error(`User with email ${signInData.email} don't exist!`))
-                }
-                if (!(await bcrypt.compare(signInData.password, expectedUser.password))) {
-                    next(new Error(`Wrong password, please try again!`))
-                }
-                res.status(200).json({
-                    access_token: "ok"
-                })
-            }
-
-        } catch (err) {
-            next(err);
-        }
-    }
-
-    //Register User
-    async signUp(req: express.Request, res: express.Response, next: any) {
-        try {
-            var err = validationResult(req);
-            if (!err.isEmpty()) {
-                next(err.mapped())
-            } else {
-                const { name, email, password } = req.body;
-                const newUser = new User({
-                    name: name,
-                    email: email,
-                    password: await bcrypt.hash(password, 10)
-                })
-                newUser.save()
-                    .then((user) => res.status(201).send({ name: user.name, email: user.email }))
-                    .catch((err) => {
-                        next(new Error(err.message));
-                    })
-            }
-        } catch (err) {
-            next(err)
-        }
     }
 
     //Get All Users
@@ -90,7 +41,7 @@ class UserController {
     //Update User By Id 
     async update(req: express.Request, res: express.Response, next: any) {
         try {
-            var err = validationResult(req);
+            const err = validationResult(req);
             if (!err.isEmpty()) {
                 next(err.mapped())
             } else {
@@ -99,12 +50,15 @@ class UserController {
                 const updatedUser = await User.findByIdAndUpdate(id, {
                     name: newUser.name,
                     email: newUser.email,
-                    password: await bcrypt.hash(newUser.password, 10)
+                    phone: newUser.phone,
+                    password: await bcrypt.hash(newUser.password, 10),
+                    type: newUser.type,
+                    status: newUser.status
                 })
                 await updatedUser.save();
                 res.status(200).json({
                     name: newUser.name,
-                    email: newUser.email
+                    email: newUser.email,
                 })
             }
         } catch (err) {
