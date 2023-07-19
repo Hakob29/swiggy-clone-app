@@ -41,26 +41,22 @@ class UserController {
     //Update User By Id 
     async update(req: express.Request, res: express.Response, next: any) {
         try {
-            const err = validationResult(req);
-            if (!err.isEmpty()) {
-                next(err.mapped())
-            } else {
-                const id = req.params.id;
-                const newUser = req.body;
-                const updatedUser = await User.findByIdAndUpdate(id, {
-                    name: newUser.name,
-                    email: newUser.email,
-                    phone: newUser.phone,
-                    password: await bcrypt.hash(newUser.password, 10),
-                    type: newUser.type,
-                    status: newUser.status
-                })
-                await updatedUser.save();
-                res.status(200).json({
-                    name: newUser.name,
-                    email: newUser.email,
-                })
-            }
+
+            const id = req.params.id;
+            const newUser = req.body;
+            const updatedUser = await User.findByIdAndUpdate(id, {
+                name: newUser.name,
+                email: newUser.email,
+                phone: newUser.phone,
+                password: await bcrypt.hash(newUser.password, 10),
+                type: newUser.type,
+                status: newUser.status
+            })
+            await updatedUser.save();
+            res.status(200).json({
+                name: newUser.name,
+                email: newUser.email,
+            })
         } catch (err) {
             next(err);
         }

@@ -1,6 +1,7 @@
 import { Router } from "express"
 import UserController from "./user.controller";
 import { UserValidators } from "./user-validators";
+import { GlobalValidation } from "../middlewares/global-validation";
 
 class UserRouter {
 
@@ -30,7 +31,7 @@ class UserRouter {
 
     //Update User By Id 
     putRouter() {
-        this.router.put("/update/:id", UserValidators.update(), UserController.update)
+        this.router.put("/update/:id", UserValidators.update(), GlobalValidation.checkError, UserController.update)
 
     }
 
